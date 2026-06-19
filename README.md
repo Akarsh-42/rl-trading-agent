@@ -1,99 +1,134 @@
-# RL Trading Agent with Gymnasium, PPO, DQN, and Stable-Baselines3
+# RL Trading Agent using Gymnasium, PPO, DQN, and Stable-Baselines3
 
-This is a portfolio-ready reinforcement learning project where an agent learns to trade a synthetic price series. It includes:
-
-- A custom `Gymnasium` trading environment
-- PPO and DQN training with `Stable-Baselines3`
-- Evaluation metrics such as total return, Sharpe ratio, and max drawdown
-- Reproducible scripts suitable for GitHub and resume discussion
+This project implements a reinforcement learning trading agent that learns to make buy, sell, and hold decisions in a custom market environment. The goal is to demonstrate reinforcement learning environment design, reward shaping, model training, and evaluation using financial performance metrics.
 
 > Educational project only. This is not financial advice and should not be used for live trading.
 
-## 1. Project Idea
+## Project Demo
 
-The agent observes recent market features and chooses one of three actions:
+The agent is evaluated by tracking portfolio value over time.
+
+![RL Trading Agent Equity Curve](reports/equity_curve.png)
+
+## Tech Stack
+
+- Python
+- Gymnasium
+- Stable-Baselines3
+- PPO
+- DQN
+- NumPy
+- Pandas
+- Matplotlib
+
+## How It Works
+
+The project uses a custom `TradingEnv` environment that follows the Gymnasium API.
+
+The agent observes market features such as:
+
+- recent returns
+- moving-average ratio
+- volatility
+- current cash allocation
+- current invested allocation
+
+The action space is discrete:
 
 - `0`: hold
 - `1`: buy / go long
 - `2`: sell / exit position
 
-The goal is to maximize portfolio value over time while accounting for transaction fees.
+The reward is based on the percentage change in portfolio value after each step, including transaction fees.
 
-## 2. Setup
+## Results
+
+The trained agent is evaluated using:
+
+- final portfolio value
+- total return
+- Sharpe ratio
+- max drawdown
+- equity curve visualization
+
+Sample evaluation output:
+
+```text
+Final portfolio value: generated during evaluation
+Total return: generated during evaluation
+Sharpe ratio: generated during evaluation
+Max drawdown: generated during evaluation
+```
+
+## Setup
+
+Create and activate a virtual environment:
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements.txt
 ```
 
-On macOS/Linux:
+Install dependencies:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## 3. Train PPO
+## Train PPO
 
 ```bash
 python train.py --algo ppo --timesteps 50000
 ```
 
-## 4. Train DQN
+## Train DQN
 
 ```bash
 python train.py --algo dqn --timesteps 50000
 ```
 
-## 5. Evaluate
+## Evaluate A Model
 
 ```bash
 python evaluate.py --model models/ppo_trading_agent.zip
+```
+
+or:
+
+```bash
 python evaluate.py --model models/dqn_trading_agent.zip
 ```
 
-Evaluation creates a portfolio chart in `reports/`.
+The evaluation script saves the chart to:
 
-## 6. Recommended GitHub Structure
+```text
+reports/equity_curve.png
+```
+
+## Project Structure
 
 ```text
 rl-trading-agent/
-  trading_env.py
   data.py
+  trading_env.py
   train.py
   evaluate.py
   requirements.txt
   README.md
-  models/
+  STEP_BY_STEP_GUIDE.md
   reports/
+    equity_curve.png
 ```
 
-Do not commit large model files unless they are small. For a clean portfolio repo, commit the code, README, and sample evaluation plots.
+## Resume Bullet
 
-## 7. What To Say On Your Resume
+Built a reinforcement learning trading agent using Gymnasium and Stable-Baselines3, implementing a custom market environment with PPO/DQN training, transaction-cost-aware rewards, and evaluation through Sharpe ratio, max drawdown, and equity curve analysis.
 
-**Reinforcement Learning Trading Agent**
+## Future Improvements
 
-- Built a custom Gymnasium trading environment with discrete buy/sell/hold actions, transaction costs, rolling market observations, and portfolio-based rewards.
-- Trained and compared PPO and DQN agents using Stable-Baselines3.
-- Evaluated agent performance using cumulative return, Sharpe ratio, max drawdown, and equity curve visualizations.
-- Packaged the project with reproducible scripts and documentation for GitHub deployment.
-
-## 8. Interview Explanation
-
-In interviews, explain the project like this:
-
-> I built a reinforcement learning environment where the state contains recent market features, the action space is hold/buy/sell, and the reward is based on portfolio value changes after transaction costs. I trained PPO and DQN agents using Stable-Baselines3, then compared them using financial metrics like Sharpe ratio and max drawdown. The goal was not to build a production trading bot, but to demonstrate RL environment design, reward shaping, model training, and evaluation.
-
-## 9. Next Improvements
-
-- Replace synthetic prices with real stock or crypto data.
-- Add short selling.
-- Add position sizing instead of all-in/all-out trades.
-- Compare against buy-and-hold.
-- Use walk-forward validation.
-- Add TensorBoard charts.
-- Deploy results with Streamlit or GitHub Pages.
-
+- Replace synthetic data with real stock or crypto data.
+- Add a buy-and-hold benchmark.
+- Add short selling and position sizing.
+- Use train/test splits and walk-forward validation.
+- Add TensorBoard logging.
+- Build a Streamlit dashboard for interactive evaluation.
