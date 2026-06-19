@@ -115,14 +115,9 @@ rl-trading-agent/
   evaluate.py
   requirements.txt
   README.md
-  STEP_BY_STEP_GUIDE.md
   reports/
     equity_curve.png
 ```
-
-## Resume Bullet
-
-Built a reinforcement learning trading agent using Gymnasium and Stable-Baselines3, implementing a custom market environment with PPO/DQN training, transaction-cost-aware rewards, and evaluation through Sharpe ratio, max drawdown, and equity curve analysis.
 
 ## Future Improvements
 
