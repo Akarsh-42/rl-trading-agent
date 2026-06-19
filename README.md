@@ -1,14 +1,24 @@
-# RL Trading Agent using Gymnasium, PPO, DQN, and Stable-Baselines3
+# RL Trading Agent
 
-This project implements a reinforcement learning trading agent that learns to make buy, sell, and hold decisions in a custom market environment. The goal is to demonstrate reinforcement learning environment design, reward shaping, model training, and evaluation using financial performance metrics.
+An interactive reinforcement learning project where an agent learns to make **hold**, **buy**, and **sell** decisions in a simulated trading environment.
 
-> Educational project only. This is not financial advice and should not be used for live trading.
+The project combines a custom `Gymnasium` environment with `Stable-Baselines3` models trained using **PPO** and **DQN**. It also includes a **Streamlit dashboard** for evaluating trained agents and visualizing portfolio performance.
 
-## Project Demo
+> This project is for learning and demonstration only. It is not financial advice and is not intended for live trading.
 
-The agent is evaluated by tracking portfolio value over time.
+## Demo
+
+The Streamlit app evaluates a trained RL model and displays portfolio metrics, an equity curve, and action distribution.
 
 ![RL Trading Agent Equity Curve](reports/equity_curve.png)
+
+## What This Project Shows
+
+- Built a custom reinforcement learning environment using the Gymnasium API.
+- Trained PPO and DQN agents with Stable-Baselines3.
+- Designed a trading reward based on portfolio value changes after transaction costs.
+- Evaluated model performance using financial metrics.
+- Added a Streamlit interface so the project can be tested without reading the code first.
 
 ## Tech Stack
 
@@ -22,46 +32,64 @@ The agent is evaluated by tracking portfolio value over time.
 - Pandas
 - Matplotlib
 
-## How It Works
+## How The Agent Works
 
-The project uses a custom `TradingEnv` environment that follows the Gymnasium API.
+The agent receives a market observation and chooses one action at each step.
 
-The agent observes market features such as:
+### Observation Space
+
+The observation contains:
 
 - recent returns
 - moving-average ratio
-- volatility
+- rolling volatility
 - current cash allocation
 - current invested allocation
 
-The action space is discrete:
+### Action Space
 
-- `0`: hold
-- `1`: buy / go long
-- `2`: sell / exit position
+| Action | Meaning |
+|---|---|
+| `0` | Hold |
+| `1` | Buy / go long |
+| `2` | Sell / exit position |
 
-The reward is based on the percentage change in portfolio value after each step, including transaction fees.
+### Reward
 
-## Results
-
-The trained agent is evaluated using:
-
-- final portfolio value
-- total return
-- Sharpe ratio
-- max drawdown
-- equity curve visualization
-
-Sample evaluation output:
+The reward is based on the percentage change in portfolio value:
 
 ```text
-Final portfolio value: generated during evaluation
-Total return: generated during evaluation
-Sharpe ratio: generated during evaluation
-Max drawdown: generated during evaluation
+(new portfolio value - previous portfolio value) / previous portfolio value
 ```
 
-## Setup
+Transaction fees are included, so the agent is penalized for unnecessary trading.
+
+## Evaluation Metrics
+
+The project evaluates each trained model using:
+
+- **Final portfolio value**
+- **Total return**
+- **Sharpe ratio**
+- **Max drawdown**
+- **Equity curve**
+- **Action distribution**
+
+## Project Structure
+
+```text
+rl-trading-agent/
+  app.py              # Streamlit dashboard
+  data.py             # Synthetic market data generation
+  trading_env.py      # Custom Gymnasium trading environment
+  train.py            # PPO/DQN training script
+  evaluate.py         # Model evaluation script
+  requirements.txt    # Python dependencies
+  models/             # Saved trained models
+  reports/            # Evaluation charts
+```
+
+## Run Locally
 
 Create and activate a virtual environment:
 
@@ -76,65 +104,55 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-## Train PPO
-
-```bash
-python train.py --algo ppo --timesteps 50000
-```
-
-## Train DQN
-
-```bash
-python train.py --algo dqn --timesteps 50000
-```
-
-## Evaluate A Model
-
-```bash
-python evaluate.py --model models/ppo_trading_agent.zip
-```
-
-or:
-
-```bash
-python evaluate.py --model models/dqn_trading_agent.zip
-```
-
-The evaluation script saves the chart to:
-
-```text
-reports/equity_curve.png
-```
-
-## Run Streamlit Demo
+Start the Streamlit app:
 
 ```bash
 streamlit run app.py
 ```
 
-The Streamlit app lets users select PPO or DQN, run an evaluation, view portfolio metrics, and display the equity curve.
+## Train Models
 
-## Project Structure
+Train PPO:
+
+```bash
+python train.py --algo ppo --timesteps 50000
+```
+
+Train DQN:
+
+```bash
+python train.py --algo dqn --timesteps 50000
+```
+
+## Evaluate From Terminal
+
+Evaluate PPO:
+
+```bash
+python evaluate.py --model models/ppo_trading_agent.zip
+```
+
+Evaluate DQN:
+
+```bash
+python evaluate.py --model models/dqn_trading_agent.zip
+```
+
+The evaluation script saves the equity curve to:
 
 ```text
-rl-trading-agent/
-  data.py
-  trading_env.py
-  train.py
-  evaluate.py
-  app.py
-  requirements.txt
-  README.md
-  models/
-  reports/
-    equity_curve.png
+reports/equity_curve.png
 ```
+
+## Why This Project Matters
+
+This project demonstrates practical reinforcement learning skills beyond using a prebuilt environment. It includes environment design, state representation, reward design, model training, model evaluation, and deployment through an interactive dashboard.
 
 ## Future Improvements
 
-- Replace synthetic data with real stock or crypto data.
-- Add a buy-and-hold benchmark.
+- Add real stock or crypto market data.
+- Compare the RL agent against a buy-and-hold baseline.
+- Add train/test splits and walk-forward validation.
 - Add short selling and position sizing.
-- Use train/test splits and walk-forward validation.
-- Add TensorBoard logging.
-- Build a Streamlit dashboard for interactive evaluation.
+- Add TensorBoard training logs.
+- Deploy the Streamlit app publicly.
