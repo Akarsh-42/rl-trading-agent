@@ -2,7 +2,7 @@
 
 An interactive reinforcement learning project where an agent learns to make **hold**, **buy**, and **sell** decisions in a simulated trading environment.
 
-**Live Demo:** [Open Streamlit App](https://rl-trading-agent-d5oo6w5qsxpfhvndebgeoq.streamlit.app/)
+**Live Demo:**(https://rl-trading-agent-d5oo6w5qsxpfhvndebgeoq.streamlit.app/)
 
 The project combines a custom `Gymnasium` environment with `Stable-Baselines3` models trained using **PPO** and **DQN**. It also includes a **Streamlit dashboard** for evaluating trained agents and visualizing portfolio performance.
 
