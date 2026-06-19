@@ -15,6 +15,7 @@ The agent is evaluated by tracking portfolio value over time.
 - Python
 - Gymnasium
 - Stable-Baselines3
+- Streamlit
 - PPO
 - DQN
 - NumPy
@@ -105,6 +106,14 @@ The evaluation script saves the chart to:
 reports/equity_curve.png
 ```
 
+## Run Streamlit Demo
+
+```bash
+streamlit run app.py
+```
+
+The Streamlit app lets users select PPO or DQN, run an evaluation, view portfolio metrics, and display the equity curve.
+
 ## Project Structure
 
 ```text
@@ -113,8 +122,10 @@ rl-trading-agent/
   trading_env.py
   train.py
   evaluate.py
+  app.py
   requirements.txt
   README.md
+  models/
   reports/
     equity_curve.png
 ```
